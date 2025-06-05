@@ -4,6 +4,103 @@
 {% block title %}Contact - Vijay's Portfolio{% endblock %}
 
 {% block content %}
+<!-- Form styling -->
+<style>
+    /* Custom form styling */
+    .contact-form input.form-control,
+    .contact-form textarea.form-control {
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 16px 18px;
+        font-size: 15px;
+        transition: all 0.2s ease;
+        background-color: #fcfcfc;
+    }
+
+    .contact-form input.form-control:focus,
+    .contact-form textarea.form-control:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+        background-color: #fff;
+    }
+
+    .contact-form .form-text {
+        font-size: 13px;
+        color: #888;
+        margin-top: 5px;
+        font-weight: 400;
+    }
+
+    .contact-form .form-label {
+        margin-bottom: 10px;
+        color: #444;
+        font-weight: 500;
+    }
+
+    .contact-form button[type="submit"] {
+        background: #6366f1;
+        border: none;
+        border-radius: 30px;
+        padding: 12px 32px;
+        font-weight: 500;
+        letter-spacing: 0.3px;
+        font-size: 16px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+    }
+
+    .contact-form button[type="submit"]:hover {
+        background: #4f46e5;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(99, 102, 241, 0.5);
+    }
+
+    .contact-form textarea.form-control {
+        min-height: 150px;
+        resize: vertical;
+    }
+
+    .contact-form .form-group {
+        margin-bottom: 28px;
+        position: relative;
+    }
+
+    .contact-form .is-focused {
+        position: relative;
+    }
+
+    .contact-form .is-focused:after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -3px;
+        height: 2px;
+        width: 100%;
+        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
+    }
+
+    .contact-form .is-focused:after {
+        transform: scaleX(1);
+    }
+
+    /* Custom alert styling */
+    .alert {
+        border-radius: 10px;
+        border-left: 4px solid;
+    }
+
+    .alert-success {
+        border-left-color: #28a745;
+        background-color: rgba(40, 167, 69, 0.1);
+    }
+
+    .alert-danger {
+        border-left-color: #dc3545;
+        background-color: rgba(220, 53, 69, 0.1);
+    }
+</style>
 <!-- Contact Hero Section -->
 <section class="contact-hero bg-gradient-primary text-white py-5"
     style="margin-top: 76px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 30vh; display: flex; align-items: center;">
@@ -22,14 +119,12 @@
 <!-- Contact Form & Info Section -->
 <section class="contact-section py-5" id="contact-form">
     <div class="container">
-        <div class="row g-5">
-            <!-- Contact Form -->
+        <div class="row g-5"> <!-- Contact Form -->
             <div class="col-lg-8">
-                <div class="contact-form-wrapper bg-white p-4 rounded shadow-sm">
-                    <h2 class="h3 fw-bold mb-4">Send Me a Message</h2>
+                <div class="contact-form-wrapper bg-white p-5 p-md-6 rounded shadow">
+                    <h2 class="h3 fw-bold mb-3">Send Me a Message</h2>
                     <p class="text-muted mb-4">
-                        Fill out the form below and I'll get back to you as soon as possible. Whether you have a project
-                        idea, question, or just want to say hello, I'd love to hear from you!
+                        Fill out the form below and I'll get back to you as soon as possible.
                     </p>
 
                     {% if messages %}
@@ -38,36 +133,45 @@
                         {{ message }}
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
-                    {% endfor %}
-                    {% endif %} <form method="post" class="contact-form">
+                    {% endfor %} {% endif %} <form method="post" class="contact-form" style="padding: 30px;">
                         {% csrf_token %}
-                        <div class="row g-3">
+                        <div class="row g-5">
                             <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="{{ form.name.id_for_label }}" class="form-label">Your Name</label>
+                                <div class="form-group">
+                                    <label for="{{ form.name.id_for_label }}" class="form-label">
+                                        <i class="fas fa-user text-primary"></i> Your Name
+                                    </label>
                                     {{ form.name }}
+                                    <div class="form-text">Please enter your full name</div>
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="{{ form.email.id_for_label }}" class="form-label">Your Email</label>
+                                <div class="form-group">
+                                    <label for="{{ form.email.id_for_label }}" class="form-label">
+                                        <i class="fas fa-envelope text-primary"></i> Your Email
+                                    </label>
                                     {{ form.email }}
+                                    <div class="form-text">We'll never share your email</div>
                                 </div>
                             </div>
                             <div class="col-12">
-                                <div class="mb-3">
-                                    <label for="{{ form.subject.id_for_label }}" class="form-label">Subject</label>
+                                <div class="form-group">
+                                    <label for="{{ form.subject.id_for_label }}" class="form-label">
+                                        <i class="fas fa-heading text-primary"></i> Subject
+                                    </label>
                                     {{ form.subject }}
                                 </div>
                             </div>
                             <div class="col-12">
-                                <div class="mb-3">
-                                    <label for="{{ form.message.id_for_label }}" class="form-label">Your Message</label>
+                                <div class="form-group">
+                                    <label for="{{ form.message.id_for_label }}" class="form-label">
+                                        <i class="fas fa-comment-alt text-primary"></i> Your Message
+                                    </label>
                                     {{ form.message }}
                                 </div>
                             </div>
-                            <div class="col-12">
-                                <button type="submit" class="btn btn-primary btn-lg px-4">
+                            <div class="col-12 text-center mt-5">
+                                <button type="submit" class="btn btn-primary btn-lg px-5 py-3">
                                     <i class="fas fa-paper-plane me-2"></i>Send Message
                                 </button>
                             </div>
@@ -166,27 +270,51 @@
 
 {% block extra_js %}
 <script>
-    // Simple form submission handling
+    // Enhanced form handling
     document.addEventListener('DOMContentLoaded', function () {
         // Smooth scrolling for buttons that link to sections
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-
                 document.querySelector(this.getAttribute('href')).scrollIntoView({
                     behavior: 'smooth'
                 });
             });
         });
 
-        // Simple form submission state
+        // Form handling
         const form = document.querySelector('.contact-form');
         if (form) {
             const submitBtn = form.querySelector('button[type="submit"]');
             const originalHtml = submitBtn.innerHTML;
+            const inputs = form.querySelectorAll('input, textarea');
 
-            form.addEventListener('submit', function () {
-                // Store original button text
+            // Add focus effects for inputs
+            inputs.forEach(input => {
+                input.addEventListener('focus', function () {
+                    this.parentElement.classList.add('is-focused');
+                });
+
+                input.addEventListener('blur', function () {
+                    this.parentElement.classList.remove('is-focused');
+                });
+
+                // Initial check for pre-filled inputs (e.g. when form reloads after error)
+                if (input.value) {
+                    input.classList.add('has-value');
+                }
+
+                input.addEventListener('input', function () {
+                    if (this.value) {
+                        this.classList.add('has-value');
+                    } else {
+                        this.classList.remove('has-value');
+                    }
+                });
+            });
+
+            // Form submission
+            form.addEventListener('submit', function (event) {
                 submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Sending...';
                 submitBtn.disabled = true;
 

@@ -135,15 +135,13 @@ def contact(request):
                 email = form.cleaned_data['email']
                 subject = form.cleaned_data['subject']
                 message = form.cleaned_data['message']
-                full_message = f"Name: {name}\nEmail: {email}\n\nMessage:\n{message}"
+                full_message = f"This message was sent by: {name}\nfor the purpose of: {subject}\n\nMessage:\n{message}\n\nContact email: {email}"
 
-                print("Sending email with subject:", subject)
-                print("Full message content:", full_message)
                 send_mail(
                 subject=subject,
                 message=full_message,
                 from_email=email,  # or DEFAULT_FROM_EMAIL
-                recipient_list=['gvedhanth123@gmail.com'],  # Where you receive emails
+                recipient_list=['gvsvp1809@gmail.com'],  # Where you receive emails
                 fail_silently=False,
                 )
 
